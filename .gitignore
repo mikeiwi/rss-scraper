@@ -1,0 +1,26 @@
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Basics
+*.pyc
+*~
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+htmlcov
+*,cover
+.hypothesis/
+
+#PyCharm
+.idea/
