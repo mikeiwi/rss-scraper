@@ -17,4 +17,4 @@ from django.urls import path
 
 from users.views import signup
 
-urlpatterns = [path("", signup, name='home')]
+urlpatterns = [path("", signup, name="home")]
