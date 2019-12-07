@@ -1,5 +1,17 @@
 from django.shortcuts import render
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
 
 def signup(request):
-    return render(request, 'users/signup.html')
+    """User registration view."""
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+        form = UserCreationForm(request.POST)
+        form.save()
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect('home')
+    return render(request, 'users/signup.html', {'form': form})
