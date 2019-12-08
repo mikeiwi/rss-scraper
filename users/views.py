@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 
 
 def login_view(request):
+    """Authentication view."""
     form = AuthenticationForm(data=request.POST)
     if form.is_valid():
         username = form.cleaned_data.get("username")

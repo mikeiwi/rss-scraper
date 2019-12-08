@@ -1,5 +1,5 @@
 from django.urls import path
 
-from .views import feed_list
+from .views import FeedListView
 
-urlpatterns = [path("/list", feed_list, name="user_feed_list")]
+urlpatterns = [path("/list", FeedListView.as_view(), name="user_feed_list")]
