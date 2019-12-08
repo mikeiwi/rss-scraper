@@ -7,10 +7,11 @@ class Feed(models.Model):
     title = models.CharField(max_length=100)
     updated = models.DateTimeField("Feed data update date")
     modified_dt = models.DateTimeField("Internal update date", auto_now=True)
+    creation_dt = models.DateTimeField("Creation date", auto_now_add=True)
     users = models.ManyToManyField(User)
 
     class Meta:
-        ordering = ['headline']
+        ordering = ["modified_dt"]
 
     def __str__(self):
-        return self.headline
+        return self.title
