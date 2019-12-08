@@ -4,6 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 
 
+def login_view(request):
+    return render(request, "users/signup.html")
+
+
 def signup(request):
     """User registration view."""
     form = UserCreationForm(request.POST)
@@ -14,5 +18,5 @@ def signup(request):
         password = form.cleaned_data.get("password1")
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect("home")
+        return redirect("login")
     return render(request, "users/signup.html", {"form": form})
