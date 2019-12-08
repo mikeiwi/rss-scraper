@@ -13,7 +13,7 @@ def login_view(request):
         login(request, user)
         return redirect("login")
 
-    return render(request, "users/signup.html")
+    return render(request, "users/login.html", {"form": form})
 
 
 def signup(request):
