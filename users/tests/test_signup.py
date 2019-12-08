@@ -18,3 +18,13 @@ def test_signup_user_creation(client):
         "", {"username": "eric", "password1": "centipad", "password2": "centipad"}
     )
     assert User.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_signup_fail(client):
+    """On unsuccesful POST request, a User should not be created."""
+    assert User.objects.count() == 0
+    client.post(
+        "", {"username": "eric", "password1": "centipad", "password2": "2312"}
+    )
+    assert User.objects.count() == 0
