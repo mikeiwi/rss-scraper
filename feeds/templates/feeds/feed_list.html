@@ -1,0 +1,15 @@
+<h1>Your feeds</h1>
+
+{% if feed_list %}
+<ul>
+  
+  {% for feed in feed_list %}
+  <li>
+    <a href="{{ feed.id }}">{{ feed.title }}</a> ({{ feed.modified_dt }})
+  </li>
+  {% endfor %}
+  
+</ul>
+{% else %}
+<p>You are not subscribed to any feed.</p>
+{% endif %} 
