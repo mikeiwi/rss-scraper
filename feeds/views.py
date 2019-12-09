@@ -17,3 +17,9 @@ class FeedCreateView(LoginRequiredMixin, CreateView):
     model = Feed
     fields = ["url"]
     success_url = reverse_lazy("user_feed_list")
+
+    def form_valid(self, form):
+        form_valid = super().form_valid(form)
+        form.instance.users.add(self.request.user)
+        form.instance.save()
+        return form_valid

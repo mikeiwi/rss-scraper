@@ -21,7 +21,7 @@ def test_subscribed_feeds(client):
 
     baker.make("Feed", title="My awesome feed", users=[u])
     baker.make("Feed", title="Another cool one", users=[u])
-    baker.make("Feed", title="This is lame, but gives me a moral superiority")
+    baker.make("Feed", title="This is lame, but gives me moral superiority")
 
     client.login(username="eric", password="coonnfriends")
     response = client.get(reverse("user_feed_list"))

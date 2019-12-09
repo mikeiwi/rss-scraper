@@ -8,7 +8,7 @@ from feeds.models import Feed
 
 @pytest.mark.django_db
 def test_create_feed(client):
-    """The feed list may only contain feeds which the user is subscribed to."""
+    """Feed creation should be successfuly saved and with the user set."""
     u = baker.make("User", username="eric")
     u.set_password("coonnfriends")
     u.save()
@@ -20,3 +20,5 @@ def test_create_feed(client):
         {"url": "https://my-grandma-flirting-lessons-blog.me/rss"},
     )
     assert Feed.objects.count() == 1
+    feed = Feed.objects.get()
+    assert feed.users.filter(id=u.id).exists()
