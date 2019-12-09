@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
@@ -35,6 +35,6 @@ class FeedEntriesListView(LoginRequiredMixin, ListView):
 
 def bookmark_entry(request, entry_id):
     """Set an entry as favourite for the user."""
-    entry = Entry.objects.get(id=entry_id)
+    entry = get_object_or_404(Entry, id=entry_id)
     entry.bookmarks.add(request.user)
     return render(request, "feeds/bookmark_entry.html")

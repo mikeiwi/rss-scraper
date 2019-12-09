@@ -25,6 +25,14 @@ def test_bookmark_entry(client, authenticated_user):
     response = client.post(
         reverse("bookmark_entry", kwargs={"entry_id": entry.id})
     )
-    print(response)
     assert response.status_code == 200
     assert entry.bookmarks.filter(id=authenticated_user.id).exists()
+
+
+@pytest.mark.django_db
+def test_bookmark_unexisting_entry(client, authenticated_user):
+    """if an entry does not exists, an error is responded."""
+    response = client.post(
+        reverse("bookmark_entry", kwargs={"entry_id": 123})
+    )
+    assert response.status_code == 404
