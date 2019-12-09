@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView
 from django.urls import reverse_lazy
 
-from .models import Feed
+from .models import Feed, Entry
 
 
 class FeedListView(LoginRequiredMixin, ListView):
@@ -23,3 +23,10 @@ class FeedCreateView(LoginRequiredMixin, CreateView):
         form.instance.users.add(self.request.user)
         form.instance.save()
         return form_valid
+
+
+class FeedEntriesListView(LoginRequiredMixin, ListView):
+    model = Entry
+
+    def get_queryset(self):
+        return Entry.objects.filter(feed_id=self.kwargs['feed_id'])

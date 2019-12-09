@@ -15,3 +15,18 @@ class Feed(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Entry(models.Model):
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    link = models.CharField("Entry URL", max_length=200)
+    title = models.CharField(max_length=100)
+    summary = models.TextField()
+    content = models.TextField("Complete content")
+    updated = models.DateTimeField("Update time according to source")
+
+    class Meta:
+        ordering = ["updated"]
+
+    def __str__(self):
+        return self.title

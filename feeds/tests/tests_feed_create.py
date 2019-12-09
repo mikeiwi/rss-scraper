@@ -1,4 +1,4 @@
-"""Feed list testcases"""
+"""Feed create testcases"""
 import pytest
 from django.urls import reverse
 
