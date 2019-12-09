@@ -13,17 +13,12 @@ def test_unauthenticated_user(client):
 
 
 @pytest.mark.django_db
-def test_subscribed_feeds(client):
+def test_subscribed_feeds(client, authenticated_user):
     """The feed list may only contain feeds which the user is subscribed to."""
-    u = baker.make("User", username="eric")
-    u.set_password("coonnfriends")
-    u.save()
-
-    baker.make("Feed", title="My awesome feed", users=[u])
-    baker.make("Feed", title="Another cool one", users=[u])
+    baker.make("Feed", title="My awesome feed", users=[authenticated_user])
+    baker.make("Feed", title="Another cool one", users=[authenticated_user])
     baker.make("Feed", title="This is lame, but gives me moral superiority")
 
-    client.login(username="eric", password="coonnfriends")
     response = client.get(reverse("user_feed_list"))
     assert response.status_code == 200
     assert response.content.count(b"<li>") == 2
