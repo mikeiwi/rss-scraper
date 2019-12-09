@@ -24,6 +24,7 @@ class Entry(models.Model):
     summary = models.TextField()
     content = models.TextField("Complete content")
     updated = models.DateTimeField("Update time according to source")
+    bookmarks = models.ManyToManyField(User)
 
     class Meta:
         ordering = ["updated"]
