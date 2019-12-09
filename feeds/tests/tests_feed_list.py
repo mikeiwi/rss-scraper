@@ -1,4 +1,4 @@
-"""Users authentication testcases"""
+"""Feed list testcases"""
 import pytest
 from django.urls import reverse
 
