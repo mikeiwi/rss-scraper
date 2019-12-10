@@ -18,7 +18,7 @@ class FeedListView(LoginRequiredMixin, ListView):
 @login_required
 def follow_feed(request):
     form = FollowFeedForm()
-    if request.method == 'POST':
+    if request.method == "POST":
         form = FollowFeedForm(request.POST)
         if form.is_valid():
             url = form.cleaned_data.get("url")
@@ -34,7 +34,7 @@ class FeedEntriesListView(LoginRequiredMixin, ListView):
     model = Entry
 
     def get_queryset(self):
-        return Entry.objects.filter(feed_id=self.kwargs['feed_id'])
+        return Entry.objects.filter(feed_id=self.kwargs["feed_id"])
 
 
 def bookmark_entry(request, entry_id):

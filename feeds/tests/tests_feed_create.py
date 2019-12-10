@@ -37,3 +37,10 @@ def test_follow_existing_feed(client, authenticated_user):
     assert Feed.objects.count() == 1
     feed = Feed.objects.get()
     assert feed.users.filter(id=authenticated_user.id).exists()
+
+
+@pytest.mark.django_db
+def test_follow_invalid_url(client, authenticated_user):
+    """On invalid url, a Feed should not be created.."""
+    client.post(reverse("user_feed_follow"), {"url": "this is not a url"})
+    assert Feed.objects.count() == 0
