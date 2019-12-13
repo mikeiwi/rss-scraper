@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_http_methods
 from django.views.generic import ListView
 
 from .forms import FollowFeedForm
@@ -37,6 +38,7 @@ class FeedEntriesListView(LoginRequiredMixin, ListView):
         return Entry.objects.filter(feed_id=self.kwargs["feed_id"])
 
 
+@require_http_methods(["POST"])
 def bookmark_entry(request, entry_id):
     """Set an entry as favourite for the user."""
     entry = get_object_or_404(Entry, id=entry_id)

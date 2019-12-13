@@ -33,6 +33,14 @@ def test_bookmark_unexisting_entry(client, authenticated_user):
 
 
 @pytest.mark.django_db
+def test_bookmark_method_not_allowed(client, authenticated_user):
+    """Only post request are allowed for entry bookmarking."""
+    entry = baker.make("Entry")
+    response = client.get(reverse("bookmark_entry", kwargs={"entry_id": entry.id}))
+    assert response.status_code == 405
+
+
+@pytest.mark.django_db
 def test_bookmarks_list(client, authenticated_user):
     """An user may only see a list of his/her own bookmarked entries."""
     own_entries = baker.make("Entry", _quantity=5)
