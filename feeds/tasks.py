@@ -1,8 +1,16 @@
 import feedparser
 
-from feeds.models import Feed
+from feeds.models import Feed, Entry
 
 
 def update_feed(feed_id):
     feed = Feed.objects.get(id=feed_id)
-    feedparser.parse(feed.url)
+    d = feedparser.parse(feed.url)
+    for entry in d["entries"]:
+        Entry.objects.create(
+            feed=feed,
+            title=entry["title"],
+            link=entry["link"],
+            summary=entry["summary"],
+            content=entry["content"],
+        )

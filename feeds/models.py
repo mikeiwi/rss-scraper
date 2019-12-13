@@ -23,7 +23,7 @@ class Entry(models.Model):
     title = models.CharField(max_length=100)
     summary = models.TextField()
     content = models.TextField("Complete content")
-    updated = models.DateTimeField("Update time according to source")
+    updated = models.DateTimeField("Update time according to source", null=True)
     bookmarks = models.ManyToManyField(User)
 
     class Meta:
