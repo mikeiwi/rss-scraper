@@ -42,3 +42,10 @@ def bookmark_entry(request, entry_id):
     entry = get_object_or_404(Entry, id=entry_id)
     entry.bookmarks.add(request.user)
     return render(request, "feeds/bookmark_entry.html")
+
+
+class BookmarkListView(LoginRequiredMixin, ListView):
+    model = Entry
+
+    def get_queryset(self):
+        return Entry.objects.filter(bookmarks=self.request.user)
