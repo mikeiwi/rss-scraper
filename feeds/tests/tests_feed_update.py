@@ -33,3 +33,14 @@ def test_parsed_entries_update(mocker, feedparser_data):
     baker.make("Entry", feed=feed, link=feedparser_data["entries"][0]["link"])
     update_feed(feed.id)
     assert feed.entry_set.count() == 3
+
+
+@pytest.mark.django_db
+def test_gone_feed(mocker, feedparser_gone):
+    """When a feed is parsed with 410 status, it should be set as gone"""
+    m = mocker.patch("feedparser.parse")
+    m.return_value = feedparser_gone
+    feed = baker.make("Feed")
+    update_feed(feed.id)
+    feed.refresh_from_db()
+    assert feed.gone is True

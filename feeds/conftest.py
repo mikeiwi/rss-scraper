@@ -28,5 +28,14 @@ def feedparser_data():
                 "content": "quality grandma content over here",
             },
         ],
+        "status": 200,
     }
     return data
+
+
+@pytest.fixture
+def feedparser_gone():
+    """
+    Returns feedparser data with 410 status.
+    """
+    return {"status": 410}

@@ -8,6 +8,7 @@ class Feed(models.Model):
     updated = models.DateTimeField("Feed origin data update date", null=True)
     modified_dt = models.DateTimeField("Internal update date", auto_now=True)
     creation_dt = models.DateTimeField("Creation date", auto_now_add=True)
+    gone = models.BooleanField("Gone forever", default=False)
     users = models.ManyToManyField(User)
 
     class Meta:
