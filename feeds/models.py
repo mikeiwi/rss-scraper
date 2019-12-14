@@ -28,6 +28,9 @@ class Entry(models.Model):
 
     class Meta:
         ordering = ["updated"]
+        constraints = [
+            models.UniqueConstraint(fields=["link", "feed"], name="unique_entry_feed")
+        ]
 
     def __str__(self):
         return self.title

@@ -22,3 +22,14 @@ def test_parsed_entries(mocker, feedparser_data):
     feed = baker.make("Feed")
     update_feed(feed.id)
     assert feed.entry_set.count() == 3
+
+
+@pytest.mark.django_db
+def test_parsed_entries_update(mocker, feedparser_data):
+    """Parsed info and entries should be inserted in DB, unless they already exist."""
+    m = mocker.patch("feedparser.parse")
+    m.return_value = feedparser_data
+    feed = baker.make("Feed")
+    baker.make("Entry", feed=feed, link=feedparser_data["entries"][0]["link"])
+    update_feed(feed.id)
+    assert feed.entry_set.count() == 3
