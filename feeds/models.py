@@ -9,6 +9,9 @@ class Feed(models.Model):
     modified_dt = models.DateTimeField("Internal update date", auto_now=True)
     creation_dt = models.DateTimeField("Creation date", auto_now_add=True)
     gone = models.BooleanField("Gone forever", default=False)
+    failed_tries = models.PositiveIntegerField(
+        "Amount of consecutive failed parsing tries", default=0
+    )
     users = models.ManyToManyField(User)
 
     class Meta:

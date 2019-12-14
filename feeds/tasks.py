@@ -19,6 +19,11 @@ def update_feed(feed_id):
         feed.save()
         return
 
+    if d["status"] > 400 or d["bozo"] == 1:
+        feed.failed_tries += 1
+        feed.save()
+        return
+
     for entry in d["entries"]:
         Entry.objects.update_or_create(
             link=entry["link"],

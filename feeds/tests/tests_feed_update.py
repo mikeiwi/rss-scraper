@@ -44,3 +44,21 @@ def test_gone_feed(mocker):
     update_feed(feed.id)
     feed.refresh_from_db()
     assert feed.gone is True
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "feedparser_test_data",
+    [{"status": 404}, {"status": 500}, {"status": 200, "bozo": 1}],
+)
+def test_parsing_fail(mocker, feedparser_test_data):
+    """
+    When parsing fails somehow (failed request or malformed rss), 1 is added to
+    a counter for failed_tries.
+    """
+    m = mocker.patch("feedparser.parse")
+    m.return_value = feedparser_test_data
+    feed = baker.make("Feed")
+    update_feed(feed.id)
+    feed.refresh_from_db()
+    assert feed.failed_tries == 1
