@@ -4,6 +4,13 @@ from feeds.models import Feed, Entry
 
 
 def update_feed(feed_id):
+    """Updates a single feed
+
+    Parameters:
+    -----------
+    feed_id : int
+        The id of the feed to be updated.
+    """
     feed = Feed.objects.get(id=feed_id)
     d = feedparser.parse(feed.url)
 
