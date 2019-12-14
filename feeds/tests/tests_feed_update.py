@@ -6,9 +6,10 @@ from feeds.tasks import update_feed
 
 
 @pytest.mark.django_db
-def test_feedparser_called(mocker):
+def test_feedparser_called(mocker, feedparser_data):
     """Feed updating should call feedparser"""
     m = mocker.patch("feedparser.parse")
+    m.return_value = feedparser_data
     feed = baker.make("Feed", url="https://hannibal-cooking-course.info/rss")
     update_feed(feed.id)
     m.assert_called_with("https://hannibal-cooking-course.info/rss")
@@ -49,7 +50,11 @@ def test_gone_feed(mocker):
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "feedparser_test_data",
-    [{"status": 404}, {"status": 500}, {"status": 200, "bozo": 1}],
+    [
+        {"status": 404, "bozo": 0},
+        {"status": 500, "bozo": 0},
+        {"status": 200, "bozo": 1},
+    ],
 )
 def test_parsing_fail(mocker, feedparser_test_data):
     """

@@ -29,5 +29,6 @@ def feedparser_data():
             },
         ],
         "status": 200,
+        "bozo": 0,
     }
     return data
