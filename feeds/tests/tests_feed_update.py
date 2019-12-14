@@ -67,3 +67,14 @@ def test_parsing_fail(mocker, feedparser_test_data):
     update_feed(feed.id)
     feed.refresh_from_db()
     assert feed.failed_tries == 1
+
+
+@pytest.mark.django_db
+def test_reset_failed_tries(mocker, feedparser_data):
+    """On succesful parse, `failed_tries` counter should be reset."""
+    m = mocker.patch("feedparser.parse")
+    m.return_value = feedparser_data
+    feed = baker.make("Feed", failed_tries=42)
+    update_feed(feed.id)
+    feed.refresh_from_db()
+    assert feed.failed_tries == 0

@@ -24,6 +24,8 @@ def update_feed(feed_id):
         feed.save()
         return
 
+    feed.failed_tries = 0
+    feed.save()
     for entry in d["entries"]:
         Entry.objects.update_or_create(
             link=entry["link"],
