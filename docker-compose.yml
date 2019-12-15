@@ -42,3 +42,11 @@ services:
       - .:/code
     depends_on:
       - rabbit
+
+  worker-beat:
+    build: .
+    command: celery -A config.celery:app beat -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - worker

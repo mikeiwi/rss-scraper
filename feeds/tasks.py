@@ -1,8 +1,11 @@
 import feedparser
+from celery.utils.log import get_task_logger
 from config.celery import app
 from django.conf import settings
 
 from feeds.models import Feed, Entry
+
+logger = get_task_logger(__name__)
 
 
 @app.task
@@ -43,6 +46,7 @@ def update_feed(feed_id):
 @app.task
 def update_all_feeds():
     """Update all feeds in the system"""
+    logger.info('Updating all existing feeds!')
     for feed in Feed.objects.filter(
         gone=False, failed_tries__lte=settings.MAX_FAILED_TRIES
     ):
