@@ -36,3 +36,9 @@ def update_feed(feed_id):
                 "content": entry["content"],
             },
         )
+
+
+def update_all_feeds():
+    """Update all feeds in the system"""
+    for feed in Feed.objects.all():
+        update_feed(feed.id)
