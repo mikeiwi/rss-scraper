@@ -6,11 +6,14 @@
   <li>
     <a href="{{ entry.link }}">{{ entry.title }}</a>    
     <p>{{ entry.summary }}</p>
-    <b>{{ entry.mine }}</b>
+    {% if entry.is_bookmarked %}
+    <b>bookmarked!</b>
+    {% else %}
     <form action="{% url 'bookmark_entry' entry_id=entry.id %}" method="post">
       {% csrf_token %}
       <button type="submit">Bookmark me!</button>
     </form>
+    {% endif %}
   </li>
   {% endfor %}
   

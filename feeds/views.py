@@ -36,11 +36,16 @@ class FeedEntriesListView(LoginRequiredMixin, ListView):
     model = Entry
 
     def get_queryset(self):
-        return Entry.objects.filter(feed_id=self.kwargs["feed_id"])
+        entries = Entry.objects.filter(feed_id=self.kwargs["feed_id"])
+        for entry in entries:
+            entry.is_bookmarked = entry.bookmarks.filter(
+                id=self.request.user.id
+            ).exists()
+        return entries
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['feed_id'] = self.kwargs["feed_id"]
+        context["feed_id"] = self.kwargs["feed_id"]
         return context
 
 
