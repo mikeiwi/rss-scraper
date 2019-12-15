@@ -80,3 +80,11 @@ def test_update_manual(client, authenticated_user, mocker, test_feed):
     m = mocker.patch("feeds.views.update_feed")
     client.post(reverse("user_update_feed", kwargs={"feed_id": test_feed.id}))
     assert m.delay.called
+
+
+@pytest.mark.django_db
+def test_update_manual_unexisting_feed(client, authenticated_user, mocker):
+    """Updating a feed manually should call the update feed task."""
+    m = mocker.patch("feeds.views.update_feed")
+    client.post(reverse("user_update_feed", kwargs={"feed_id": 1892371}))
+    assert not m.delay.called

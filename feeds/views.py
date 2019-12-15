@@ -58,5 +58,6 @@ class BookmarkListView(LoginRequiredMixin, ListView):
 @login_required
 @require_http_methods(["POST"])
 def user_update_feed(request, feed_id):
+    get_object_or_404(Feed, id=feed_id)
     update_feed.delay(feed_id)
     return render(request, "feeds/user_update_feed.html", {"feed_id": feed_id})
