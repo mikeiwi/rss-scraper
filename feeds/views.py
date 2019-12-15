@@ -26,7 +26,7 @@ def follow_feed(request):
             feed, _ = Feed.objects.get_or_create(url=url)
             feed.users.add(request.user)
             feed.save()
-            redirect("user_feed_list")
+            return redirect("user_feed_list")
 
     return render(request, "feeds/feed_follow.html", {"form": form})
 

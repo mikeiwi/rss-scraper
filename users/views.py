@@ -12,7 +12,7 @@ def login_view(request):
         password = form.cleaned_data.get("password")
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect("login")
+        return redirect("user_feed_list")
 
     return render(request, "users/login.html", {"form": form})
 
@@ -26,5 +26,5 @@ def signup(request):
         password = form.cleaned_data.get("password1")
         user = authenticate(username=username, password=password)
         login(request, user)
-        return redirect("login")
+        return redirect("user_feed_list")
     return render(request, "users/signup.html", {"form": form})

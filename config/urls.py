@@ -16,4 +16,4 @@ Including another URLconf
 from django.urls import include, path
 
 
-urlpatterns = [path("feeds", include("feeds.urls")), path("", include("users.urls"))]
+urlpatterns = [path("feeds/", include("feeds.urls")), path("", include("users.urls"))]
