@@ -1,0 +1,15 @@
+{% if entry_list %}
+<ul>
+  
+  {% for entry in entry_list %}
+  <li>
+    <a href="{{ entry.link }}">{{ entry.title }}</a>
+    <p>{{ entry.summary }}</p>
+  </li>
+  {% endfor %}
+  
+</ul>
+{% else %}
+<p>You don't have any bookmarks yet.</p>
+{% endif %}
+<p>Back to your <a href="{% url 'user_feed_list' %}">feeds</a>.</p>

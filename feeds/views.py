@@ -55,6 +55,7 @@ def bookmark_entry(request, entry_id):
 
 class BookmarkListView(LoginRequiredMixin, ListView):
     model = Entry
+    template_name = "feeds/bookmark_list.html"
 
     def get_queryset(self):
         return Entry.objects.filter(bookmarks=self.request.user)

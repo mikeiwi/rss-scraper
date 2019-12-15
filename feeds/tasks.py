@@ -36,7 +36,6 @@ def update_feed(feed_id):
                 "feed": feed,
                 "title": entry["title"],
                 "summary": entry["summary"],
-                "content": entry["content"],
             },
         )
 
