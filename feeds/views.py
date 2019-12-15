@@ -50,7 +50,7 @@ def bookmark_entry(request, entry_id):
     """Set an entry as favourite for the user."""
     entry = get_object_or_404(Entry, id=entry_id)
     entry.bookmarks.add(request.user)
-    return render(request, "feeds/bookmark_entry.html")
+    return redirect("feed_entries", feed_id=entry.feed.id)
 
 
 class BookmarkListView(LoginRequiredMixin, ListView):

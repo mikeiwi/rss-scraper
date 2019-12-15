@@ -1,10 +1,16 @@
+<h2>Entries</h2>
 {% if entry_list %}
 <ul>
   
   {% for entry in entry_list %}
   <li>
-    <a href="{{ entry.link }}">{{ entry.title }}</a>
+    <a href="{{ entry.link }}">{{ entry.title }}</a>    
     <p>{{ entry.summary }}</p>
+    <b>{{ entry.mine }}</b>
+    <form action="{% url 'bookmark_entry' entry_id=entry.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Bookmark me!</button>
+    </form>
   </li>
   {% endfor %}
   

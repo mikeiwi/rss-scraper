@@ -12,5 +12,6 @@
 </ul>
 {% else %}
 <p>You are not subscribed to any feed.</p>
-{% endif %} 
-<a href="{% url 'user_feed_follow' %}">Follow a new feed</a>
+{% endif %}
+<p><a href="{% url 'user_feed_follow' %}">Follow a new feed</a></p>
+<p><a href="{% url 'bookmark_list' %}">Your bookmarks</a></p>
