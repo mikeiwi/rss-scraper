@@ -123,6 +123,8 @@ STATIC_URL = "/static/"
 # Feeds update config vars
 MAX_FAILED_TRIES = 3
 
+LOGIN_URL = "/"
+
 # Celery settings.
 CELERY_BROKER_URL = os.getenv('BROKER_URL', 'amqp://admin:mypass@rabbit//')
 CELERY_RESULT_BACKEND = None

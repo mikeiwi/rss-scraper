@@ -9,7 +9,7 @@ def test_unauthenticated_user(client):
     """An unauthenticated user should be redirected to the login page."""
     response = client.get(reverse("user_feed_list"))
     assert response.status_code == 302
-    assert "/login" in response["location"]
+    assert "/?next" in response["location"]
 
 
 @pytest.mark.django_db

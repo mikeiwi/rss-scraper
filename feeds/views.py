@@ -38,6 +38,7 @@ class FeedEntriesListView(LoginRequiredMixin, ListView):
         return Entry.objects.filter(feed_id=self.kwargs["feed_id"])
 
 
+@login_required
 @require_http_methods(["POST"])
 def bookmark_entry(request, entry_id):
     """Set an entry as favourite for the user."""
