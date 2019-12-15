@@ -40,5 +40,5 @@ def update_feed(feed_id):
 
 def update_all_feeds():
     """Update all feeds in the system"""
-    for feed in Feed.objects.all():
+    for feed in Feed.objects.exclude(gone=True):
         update_feed(feed.id)
