@@ -12,5 +12,10 @@
 {% else %}
 <p>There are not entries for this feed.</p>
 {% endif %}
-<p><button>Update this feed</button></p>
+<p>
+  <form action="{% url 'user_update_feed' feed_id=feed_id %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Update this feed</button>
+  </form>
+</p>
 <p>Back to your <a href="{% url 'user_feed_list' %}">feeds</a>.</p>

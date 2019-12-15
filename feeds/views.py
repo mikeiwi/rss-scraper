@@ -38,6 +38,11 @@ class FeedEntriesListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Entry.objects.filter(feed_id=self.kwargs["feed_id"])
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['feed_id'] = self.kwargs["feed_id"]
+        return context
+
 
 @login_required
 @require_http_methods(["POST"])
