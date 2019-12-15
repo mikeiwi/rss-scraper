@@ -21,7 +21,7 @@ def test_bookmark_entry(client, authenticated_user):
     """A user may bookmark an Entry in any feed."""
     entry = baker.make("Entry")
     response = client.post(reverse("bookmark_entry", kwargs={"entry_id": entry.id}))
-    assert response.status_code == 200
+    assert response.status_code == 302
     assert entry.bookmarks.filter(id=authenticated_user.id).exists()
 
 
