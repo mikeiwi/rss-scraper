@@ -1,5 +1,6 @@
 """Testcases for feed updating task"""
 import pytest
+from django.urls import reverse
 from model_bakery import baker
 
 from feeds.tasks import update_feed
@@ -71,3 +72,11 @@ def test_reset_failed_tries(feedparser_mock, feedparser_data):
     update_feed(feed.id)
     feed.refresh_from_db()
     assert feed.failed_tries == 0
+
+
+@pytest.mark.django_db
+def test_update_manual(client, authenticated_user, mocker, test_feed):
+    """Updating a feed manually should call the update feed task."""
+    m = mocker.patch("feeds.views.update_feed")
+    client.post(reverse("user_update_feed", kwargs={"feed_id": test_feed.id}))
+    assert m.delay.called

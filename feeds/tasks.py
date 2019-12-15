@@ -1,9 +1,11 @@
 import feedparser
+from config.celery import app
 from django.conf import settings
 
 from feeds.models import Feed, Entry
 
 
+@app.task
 def update_feed(feed_id):
     """Updates a single feed
 
@@ -39,6 +41,7 @@ def update_feed(feed_id):
         )
 
 
+@app.task
 def update_all_feeds():
     """Update all feeds in the system"""
     for feed in Feed.objects.filter(

@@ -6,6 +6,7 @@ from django.views.generic import ListView
 
 from .forms import FollowFeedForm
 from .models import Feed, Entry
+from .tasks import update_feed
 
 
 class FeedListView(LoginRequiredMixin, ListView):
@@ -52,3 +53,10 @@ class BookmarkListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Entry.objects.filter(bookmarks=self.request.user)
+
+
+@login_required
+@require_http_methods(["POST"])
+def user_update_feed(request, feed_id):
+    update_feed.delay(feed_id)
+    return render(request, "feeds/user_update_feed.html", {"feed_id": feed_id})
