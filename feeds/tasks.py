@@ -1,4 +1,5 @@
 import feedparser
+from django.conf import settings
 
 from feeds.models import Feed, Entry
 
@@ -40,5 +41,7 @@ def update_feed(feed_id):
 
 def update_all_feeds():
     """Update all feeds in the system"""
-    for feed in Feed.objects.exclude(gone=True):
+    for feed in Feed.objects.filter(
+        gone=False, failed_tries__lte=settings.MAX_FAILED_TRIES
+    ):
         update_feed(feed.id)

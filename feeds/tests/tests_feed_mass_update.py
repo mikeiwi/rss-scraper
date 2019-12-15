@@ -22,3 +22,16 @@ def test_update_all_feeds_gone(mocker):
     baker.make("Feed", _quantity=3, gone=True)
     update_all_feeds()
     assert m.call_count == 3
+
+
+@pytest.mark.django_db
+def test_update_all_feeds_stalled(mocker):
+    """
+    Stalled feeds (with more than a certain amount of failed tries) should not
+    be updated.
+    """
+    m = mocker.patch("feeds.tasks.update_feed")
+    baker.make("Feed", _quantity=3)
+    baker.make("Feed", _quantity=3, failed_tries=10)
+    update_all_feeds()
+    assert m.call_count == 3
