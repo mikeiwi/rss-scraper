@@ -5,6 +5,7 @@ services:
     image: postgres
   web:
     build: .
+    image: &web web
     command: python manage.py migrate
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -13,3 +14,22 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - rabbit
+
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5672:5672"  
+      - "15672:15672"
+
+  worker:
+    build: .
+    command: celery -A config.celery:app worker -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - rabbit
